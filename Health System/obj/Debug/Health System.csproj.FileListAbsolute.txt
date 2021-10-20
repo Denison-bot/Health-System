@@ -1,0 +1,7 @@
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\c#\Health-System\Health System\bin\Debug\Health System.exe.config
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\c#\Health-System\Health System\bin\Debug\Health System.exe
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\c#\Health-System\Health System\bin\Debug\Health System.pdb
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\c#\Health-System\Health System\obj\Debug\Health System.csproj.AssemblyReference.cache
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\c#\Health-System\Health System\obj\Debug\Health System.csproj.CoreCompileInputs.cache
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\c#\Health-System\Health System\obj\Debug\Health System.exe
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\c#\Health-System\Health System\obj\Debug\Health System.pdb
