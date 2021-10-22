@@ -17,6 +17,25 @@ namespace Health_System
         static int[] ammo = new int[3];
         static int[] ammoReserves = new int[3];
         static int[] ammoCapacity = new int[3];
+        static bool gameOver = false;
+
+        static void ShowHUD()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("");
+            Console.WriteLine("---------------------");
+            Console.WriteLine("Shield: " + shield + " / 100");
+            Console.WriteLine("Health: " + health + " / 100");
+            Console.WriteLine("Lives: " + lives);
+            HealthCheck();
+            Console.WriteLine("Condition: " + condition);
+            Console.WriteLine("---------------------");
+            Console.WriteLine(weaponName[weapon] + " Ammo: " + ammo[weapon]);
+            Console.WriteLine(weaponName[weapon] + " Ammo Reloads: " + ammoReserves[weapon]);
+            Console.WriteLine("---------------------");
+            Console.WriteLine("");
+            Console.ReadKey(true);
+        }
 
         static void InitWeapons()
         {
@@ -40,9 +59,30 @@ namespace Health_System
             ammoReserves[2] = 2;
         }
 
+        static void Reset()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+
+            ShowHUD();
+            Console.WriteLine("GAME OVER");
+            Console.ReadKey(true);
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("Reseting game");
+            health = 100;
+            shield = 100;
+            lives = 3;
+            ammo[weapon] = ammo[weapon];
+            ammoReserves[weapon] = ammoReserves[weapon];
+            InitWeapons();
+            
+            gameOver = false;
+        }
+
         static void Respawn()
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("You Died");           
             Console.WriteLine("respawn");
             health = 100;
             shield = 100;
@@ -53,7 +93,7 @@ namespace Health_System
 
         static void TakeDamage()
         {
-            int damage = rndDamage.Next(-25, 100);
+            int damage = rndDamage.Next(-10, 100);
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Take " + damage + " damage");
 
@@ -73,6 +113,15 @@ namespace Health_System
                 {
                     lives = lives - 1;
                     health = 0;
+                    if (lives == 0)
+                    {
+                        Reset();
+                    }
+                    else
+                    {
+                        Respawn();
+                    }
+                    
                 }
             }               
             else
@@ -85,7 +134,7 @@ namespace Health_System
         static Random rndHeal = new Random();
         static void Heal()
         {
-            int hp = rndHeal.Next(-25, 100);
+            int hp = rndHeal.Next(-2, 15);
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Heal " + hp + " points of health");
             if (hp >= 0)
@@ -106,7 +155,7 @@ namespace Health_System
         static Random rndShieldRGN = new Random();
         static void RegenerateShield()
         {
-            int hp = rndShieldRGN.Next(-25, 100);  
+            int hp = rndShieldRGN.Next(-5, 50);  
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Regen " + hp + " shield points");
             if (hp >= 0)
@@ -156,25 +205,14 @@ namespace Health_System
         {
             InitWeapons();
 
-            void Reset()
-            {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                Console.WriteLine("Reseting game");
-                health = 100;
-                shield = 100;
-                lives = 3;
-                ammo[weapon] = ammo[weapon];
-                ammoReserves[weapon] = ammoReserves[weapon];
-                InitWeapons();
-                ShowHUD();
-            }
+            
 
             Random rndFire = new Random();
             
 
             void Fire()
             {
-                int shots = rndFire.Next(-5, ammo[weapon]);
+                int shots = rndFire.Next(-2, ammo[weapon]);
                 Console.ForegroundColor = ConsoleColor.DarkMagenta;                
                 if (shots >= 0)
                 {
@@ -247,57 +285,41 @@ namespace Health_System
                 {
                     Console.WriteLine("Pick up " + ammoPack + " ammo packs");
                 }
-            }
-
-            void ShowHUD()
-            {
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("");      
-                Console.WriteLine("---------------------");
-                Console.WriteLine("Shield: " + shield + " / 100");
-                Console.WriteLine("Health: " + health + " / 100");
-                Console.WriteLine("Lives: " + lives);
-                HealthCheck();
-                Console.WriteLine("Condition: " + condition);
-                Console.WriteLine("---------------------");
-                Console.WriteLine(weaponName[weapon] + " Ammo: " + ammo[weapon]);
-                Console.WriteLine(weaponName[weapon] + " Ammo Reloads: " + ammoReserves[weapon]);
-                Console.WriteLine("---------------------");
-                Console.WriteLine("");
-                Console.ReadKey(true);
-            }
+            }            
 
 
             // test gameplay starts 
             Console.WriteLine("Game Starts");
-            ShowHUD();
+            
+            while(gameOver == false)
+            {
+                ShowHUD();
 
-            TakeDamage();
+                Fire();
+                ShowHUD();
 
+                TakeDamage();
+                ShowHUD();
 
+                PickUpAmmoPack();
+                ShowHUD();
 
-            Reset();
+                TakeDamage();
+                ShowHUD();
 
-            // start de-bugging
+                RegenerateShield();
+                ShowHUD();
 
-            Fire();
-            ShowHUD();
+                Heal();
+                ShowHUD();
 
-            Heal();
-            ShowHUD();
+                Fire();
+                
 
-            RegenerateShield();
-            ShowHUD();
-
-            TakeDamage();
-            ShowHUD();
-
-            Heal();
-            ShowHUD();
-
-            RegenerateShield(200);
-            ShowHUD();
-
+            }
+            
+            
+            
         }
     }
 }
