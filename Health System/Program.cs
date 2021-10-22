@@ -134,7 +134,7 @@ namespace Health_System
         static Random rndHeal = new Random();
         static void Heal()
         {
-            int hp = rndHeal.Next(-2, 15);
+            int hp = rndHeal.Next(-5, 15);
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Heal " + hp + " points of health");
             if (hp >= 0)

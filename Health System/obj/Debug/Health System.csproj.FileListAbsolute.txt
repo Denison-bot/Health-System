@@ -12,3 +12,10 @@ C:\Users\proba\OneDrive\Documents\School\Logic and Programming\Health System\Hea
 C:\Users\proba\OneDrive\Documents\School\Logic and Programming\Health System\Health System\obj\Debug\Health System.csproj.CoreCompileInputs.cache
 C:\Users\proba\OneDrive\Documents\School\Logic and Programming\Health System\Health System\obj\Debug\Health System.exe
 C:\Users\proba\OneDrive\Documents\School\Logic and Programming\Health System\Health System\obj\Debug\Health System.pdb
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\school\Health-System\Health System\bin\Debug\Health System.exe.config
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\school\Health-System\Health System\bin\Debug\Health System.exe
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\school\Health-System\Health System\bin\Debug\Health System.pdb
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\school\Health-System\Health System\obj\Debug\Health System.csproj.AssemblyReference.cache
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\school\Health-System\Health System\obj\Debug\Health System.csproj.CoreCompileInputs.cache
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\school\Health-System\Health System\obj\Debug\Health System.exe
+C:\Users\w0434533\OneDrive - Nova Scotia Community College\LogicAndProgramming\Scripts\school\Health-System\Health System\obj\Debug\Health System.pdb
