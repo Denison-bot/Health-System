@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics; //Debug.Assert()
 
 namespace Health_System
 {
     class Program
     {
+        static int shots;
+        static int ammoPack;
+        static int damage;
+        static int hp;
         static int health = 100;
         static int shield = 100;
         static int lives = 3;
@@ -89,11 +94,11 @@ namespace Health_System
             InitWeapons();   
         }
 
-        static Random rndDamage = new Random();
+        
 
-        static void TakeDamage()
+        static void TakeDamage(int damage)
         {
-            int damage = rndDamage.Next(-10, 100);
+            
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Take " + damage + " damage");
 
@@ -131,10 +136,9 @@ namespace Health_System
             }
             
         }
-        static Random rndHeal = new Random();
-        static void Heal()
-        {
-            int hp = rndHeal.Next(-5, 15);
+      
+        static void Heal(int hp)
+        {            
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Heal " + hp + " points of health");
             if (hp >= 0)
@@ -143,6 +147,8 @@ namespace Health_System
                 if (health >= 100)
                 {
                     health = 100;
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("Health cannot be over 100hp");
                 }
             }
             else
@@ -152,10 +158,10 @@ namespace Health_System
             }
         }
 
-        static Random rndShieldRGN = new Random();
-        static void RegenerateShield()
+       
+        static void RegenerateShield(int hp)
         {
-            int hp = rndShieldRGN.Next(-5, 50);  
+              
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Regen " + hp + " shield points");
             if (hp >= 0)
@@ -163,6 +169,8 @@ namespace Health_System
                 shield = shield + hp;
                 if (shield >= 100)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.WriteLine("Shield cannot be over 100");
                     shield = 100;
                 }              
             }
@@ -201,23 +209,38 @@ namespace Health_System
             }
         }
 
+        static int rndDmg()
+        {
+            Random rndDamage = new Random();
+            int damage = rndDamage.Next(-10, 100);
+            return damage;
+        }
+
+        static int rndHeal()
+        {
+            Random rndHeal = new Random();
+            int hp = rndHeal.Next(-5, 15);
+            return hp;
+        }
+
+        static int rndShieldRgn()
+        {
+            Random rndShieldRGN = new Random();
+            int hp = rndShieldRGN.Next(-5, 25);
+            return hp;
+        }
+
+
+
         static void Main(string[] args)
         {
             InitWeapons();
 
-            
-
-            Random rndFire = new Random();
-            
-
-            void Fire()
-            {
-                int shots = rndFire.Next(-2, ammo[weapon]);
+            void Fire(int shots)
+            {               
                 Console.ForegroundColor = ConsoleColor.DarkMagenta;                
                 if (shots >= 0)
                 {
-                    
-
                     if (shots <= ammo[weapon])
                     {
                         ammo[weapon] = ammo[weapon] - shots;
@@ -246,7 +269,13 @@ namespace Health_System
                 {
                     Console.WriteLine("Fired " + shots + " times");
                 }
+            }
 
+            int rndFire()
+            {
+                Random rnd = new Random();
+                int shots = rnd.Next(-2, ammo[weapon]);
+                return shots;
             }
 
             void Reload()
@@ -268,12 +297,11 @@ namespace Health_System
                 }
             }
 
-            Random rnd = new Random();
-            int ammoPack = rnd.Next(1, 4);
+           
 
-            void PickUpAmmoPack()
+            void PickUpAmmoPack(int ammoPack)
             {
-                ammoPack = rnd.Next(1, 4);
+                
                 ammoReserves[weapon] = ammoReserves[weapon] + ammoPack;
                 Console.ForegroundColor = ConsoleColor.DarkMagenta;
 
@@ -285,41 +313,81 @@ namespace Health_System
                 {
                     Console.WriteLine("Pick up " + ammoPack + " ammo packs");
                 }
-            }            
+            }
+
+            int rndAmmoPack()
+            {
+                Random rnd = new Random();
+                int ammoPack = rnd.Next(1, 4);
+                return ammoPack;
+            }
 
 
-            // test gameplay starts 
+            void UnitTest()
+            {
+                Console.WriteLine("Testing max HP clamp");
+                health = 100;
+                Heal(20);
+                Debug.Assert(health <= 100);
+                
+                Console.ResetColor();
+                Console.WriteLine("Testing max Shield clamp");
+                shield = 100;
+                RegenerateShield(20);
+                Debug.Assert(shield <= 100);
+
+                Console.ResetColor();
+                Console.WriteLine("Testing invalid Heal inputs");
+                Heal(-200);
+                Debug.Assert(health > 0);
+
+                Console.ResetColor();
+                Console.WriteLine("Testing invalid RegenerateShield inputs");
+                RegenerateShield(-200);
+                Debug.Assert(shield > 0);
+
+                Console.ResetColor();
+                Console.WriteLine("Testing");
+            }
+
+            UnitTest();
+
+            Console.ReadKey(true);
+
+            // test gameplay starts
+            Console.ResetColor();
+            Console.WriteLine("");
             Console.WriteLine("Game Starts");
             
             while(gameOver == false)
             {
+
                 ShowHUD();
 
-                Fire();
+                shots = rndFire();
+                Fire(shots);
                 ShowHUD();
 
-                TakeDamage();
+                damage = rndDmg();
+                TakeDamage(damage);
                 ShowHUD();
 
-                PickUpAmmoPack();
+                ammoPack = rndAmmoPack();
+                PickUpAmmoPack(ammoPack);
                 ShowHUD();
 
-                TakeDamage();
+                damage = rndDmg();
+                TakeDamage(damage);
                 ShowHUD();
 
-                RegenerateShield();
+                hp = rndShieldRgn();
+                RegenerateShield(hp);
                 ShowHUD();
 
-                Heal();
-                ShowHUD();
+                hp = rndHeal();
+                Heal(hp);               
 
-                Fire();
-                
-
-            }
-            
-            
-            
+            }     
         }
     }
 }
