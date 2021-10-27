@@ -252,6 +252,7 @@ namespace Health_System
                     }
                     else if (ammo[weapon] <= 0)
                     {
+                        ammo[weapon] = 0;
                         Reload();
                         ShowHUD();
                     }
@@ -347,13 +348,37 @@ namespace Health_System
                 Debug.Assert(shield > 0);
 
                 Console.ResetColor();
-                Console.WriteLine("Testing");
+                Console.WriteLine("Testing invalid damage inputs");
+                TakeDamage(-200);
+                Debug.Assert(health > 0);
+
+                Console.ResetColor();
+                Console.WriteLine("Testing invalid ammoPack inputs");
+                PickUpAmmoPack(-2);
+
+                Console.ResetColor();
+                Console.WriteLine("Testing Fire clamp");
+                Fire(ammo[weapon] + 1);
+                Debug.Assert(ammo[weapon] >= 0);
+
+
+                Console.ResetColor();
+                Console.WriteLine("Testing invalid Fire input");
+                Fire(-7);
+                Debug.Assert(ammo[weapon] >= 0);
+
+                Console.ResetColor();
+                Console.WriteLine("Testing Shield - Health damage spillover");
+                health = 100;
+                shield = 100;
+                TakeDamage(150);
+                Debug.Assert(health == 50);
             }
 
             UnitTest();
 
             Console.ReadKey(true);
-
+            Console.Clear();
             // test gameplay starts
             Console.ResetColor();
             Console.WriteLine("");
